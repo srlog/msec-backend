@@ -3,17 +3,15 @@ const cors = require("cors");
 const app = express();
 const sequelize = require("./config/db");
 
-const studentRoutes = require("./routes/student.routes");
-const adminRoutes = require("./routes/admin.routes");
-const masterRoutes = require("./routes/master.routes");
+const studentRoutes = require("./api/user/routes/student.routes");
+const adminRoutes = require("./api/user/routes/admin.routes");
+const masterRoutes = require("./api/user/routes/master.routes");
 const achievementRoutes = require("./routes/achievement.routes");
-const profileRoutes = require("./routes/profile.routes");
+const profileRoutes = require("./api/user/routes/profile.routes");
 
-const { Student, Admin, Master, Achievement, Log } = require("./models");
 async function syncDb() {
   try {
     await sequelize.sync({ alter: true }); // Use { alter: true } to keep data
-    console.log("All tables were dropped and re-synced successfully.");
   } catch (error) {
     console.error("Error initializing database:", error);
   }
@@ -31,7 +29,6 @@ app.use("/api/auth/admin", adminRoutes);
 app.use("/api/auth/master", masterRoutes);
 app.use("/api/achievement", achievementRoutes);
 app.use("/api/profile", profileRoutes);
-
 
 // // Commented so that, no re-init occurs for database while reload
 // console.log('Syncing database...')

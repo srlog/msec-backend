@@ -1,9 +1,7 @@
 const express = require("express");
 const studentController = require("../controllers/student.controller");
 
-
 const router = express.Router();
-
 
 router.post("/register", studentController.studentRegister);
 router.post("/bulk-register", studentController.studentBulkCreate);

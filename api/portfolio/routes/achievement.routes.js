@@ -32,6 +32,8 @@ router.patch(
   isAdmin,
   achievementController.approveAchievement
 );
+
+
 router.patch(
   "/reject/:id",
   auth,

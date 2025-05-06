@@ -1,4 +1,4 @@
-const { Master } = require("../models");
+const { Master } = require("../../../models");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

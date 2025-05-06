@@ -1,4 +1,4 @@
-const { Admin } = require("../models/index");
+const { Admin } = require("../../../models/index");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -20,7 +20,12 @@ const adminRegister = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const admin = await Admin.create({ name, email, password: hashedPassword, department });
+    const admin = await Admin.create({
+      name,
+      email,
+      password: hashedPassword,
+      department,
+    });
     res.status(201).json({ message: "Admin registered successfully" });
   } catch (error) {
     console.error("Error in admin registration:", error);
@@ -66,7 +71,7 @@ const adminLogin = async (req, res) => {
 
 const adminUpdatePassword = async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const { email, oldPassword, newPassword } = req.body;
     const admin = await Admin.findOne({ where: { email } });
     if (!admin) {
@@ -89,7 +94,7 @@ const adminUpdatePassword = async (req, res) => {
   }
 };
 
-// This should be connected with the routes and frontend.. 
+// This should be connected with the routes and frontend..
 const getStudentsByDepartment = async (req, res) => {
   try {
     const { department } = req.user.department;

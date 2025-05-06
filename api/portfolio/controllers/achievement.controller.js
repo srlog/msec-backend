@@ -1,4 +1,4 @@
-const { Achievement, Student, Admin } = require("../models");
+const { Achievement, Student } = require("../../../models");
 
 require("dotenv").config();
 
