@@ -21,17 +21,22 @@ const ResponseConstants = {
       AllFieldsRequired: "All fields are required",
       NotFound: "User not found",
       InvalidEmail: "Invalid email format",
-      InternalServerError: "Internal Server Error",
     },
   },
   Event: {
     SuccessCreation: "Event created successfully",
+    SuccessGet: "All Events fetched successfully",
+    SuccessGetById: "Event fetched successfully",
     SuccessUpdate: "Event updated successfully",
     SuccessDeletion: "Event deleted successfully",
     Error: {
       NotFound: "Event not found",
+      AllFieldsRequired: "All fields are required",
+      
+      InternalServerError: "Internal Server Error",
       InvalidDateTime:
         "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+        
     },
   },
   Registration: {
