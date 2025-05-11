@@ -8,6 +8,7 @@ const portfolioRoutes = require("./portfolio/routes/");
 
 
 router.use("/user", userRoutes);
+
 router.use("/portfolio", portfolioRoutes);
 
 module.exports = router;

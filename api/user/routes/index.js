@@ -9,6 +9,6 @@ const profileRoutes = require("./profile.routes");
 router.use("/student", studentRoutes);
 router.use("/admin", adminRoutes);
 router.use("/master", masterRoutes);
-router.use("/user", profileRoutes);
+router.use("/profile", profileRoutes);
 
 module.exports = router;

@@ -1,8 +1,7 @@
-
 const { Admin, Student, Achievement, Master } = require("../../../models");
 const {
   organizeAchievementsStudent,
-} = require("../../../controllers/achievement.controller");
+} = require("../../portfolio/controllers/achievement.controller");
 const { Op, literal } = require("sequelize");
 
 const getStudentProfile = async (req, res) => {

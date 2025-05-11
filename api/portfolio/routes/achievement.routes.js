@@ -1,14 +1,14 @@
 const express = require("express");
 const achievementController = require("../controllers/achievement.controller");
 
-const auth = require("../middleware/authMiddleware");
+const auth = require("../../../middleware/authMiddleware");
 const {
   isAdmin,
   isMaster,
   sameDept,
   isAdminOrOwner,
-} = require("../middleware/adminMiddleware");
-const log = require("../middleware/log");
+} = require("../../../middleware/adminMiddleware");
+const log = require("../../../middleware/log");
 
 const router = express.Router();
 
@@ -33,13 +33,12 @@ router.patch(
   achievementController.approveAchievement
 );
 
-
 router.patch(
   "/reject/:id",
   auth,
   isAdmin,
   achievementController.rejectAchievement
-)
+);
 router.get(
   "/get/:id",
   auth,
@@ -77,8 +76,13 @@ router.get(
   isMaster,
   achievementController.getAchievementsByClass
 );
-router.get("/getAll",auth, isMaster, achievementController.getAllAchievements);
+router.get("/getAll", auth, isMaster, achievementController.getAllAchievements);
 
-router.get("/get/all/students",auth, isMaster, achievementController.getAllStudents);
+router.get(
+  "/get/all/students",
+  auth,
+  isMaster,
+  achievementController.getAllStudents
+);
 
 module.exports = router;
