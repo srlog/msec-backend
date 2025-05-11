@@ -15,7 +15,7 @@ const Feedback = require("./Feedback");
 const Project_update = require("./Project_update");
 const Report = require("./Report");
 
-// Competetion Associations 🫠
+// Competition Associations 🫠
 Master.hasMany(Event, {
   foreignKey: { name: "created_by", allowNull: false },
   as: "eventsCreated",
