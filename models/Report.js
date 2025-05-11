@@ -29,7 +29,6 @@ const Report = sequelize.define(
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
-
     },
   },
   {

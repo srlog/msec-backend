@@ -24,7 +24,7 @@ const Feedback = sequelize.define(
     },
     mentor_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: Mentor,
         key: "mentor_id",
@@ -33,14 +33,14 @@ const Feedback = sequelize.define(
     },
     student_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: Student,
         key: "id",
       },
       onDelete: "CASCADE",
     },
-    feedback_content: {
+    content: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -50,7 +50,17 @@ const Feedback = sequelize.define(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    hooks: {
+      beforeValidate: (feedback, options) => {
+        if (feedback.mentor_id === null && feedback.student_id === null) {
+          throw new Error(
+            "A feedback must have either a mentor_id or a student_id."
+          );
+        }
+      },
+    },
   }
 );
 
 module.exports = Feedback;
+

@@ -1,6 +1,6 @@
 //team_members.js
 const { DataTypes } = require("sequelize");
-const sequelize = require("../configs/db");
+const sequelize = require("../config/db");
 const Project = require("./Project");
 const Student = require("./Student");
 

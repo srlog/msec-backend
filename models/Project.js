@@ -12,7 +12,7 @@ const Project = sequelize.define(
     project_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      AutoIncrement: true,
+      autoIncrement: true,
     },
     // Title of the project
     title: {
@@ -29,7 +29,7 @@ const Project = sequelize.define(
       type: DataTypes.STRING(500),
       allowNull: true,
     },
-    // Uploaded by (could be student name or ID)
+  
     created_by: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -37,10 +37,12 @@ const Project = sequelize.define(
         model: Student,
         key: "id",
       },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
     },
     // Associated mentor's ID
     mentor_id: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: Mentor,
