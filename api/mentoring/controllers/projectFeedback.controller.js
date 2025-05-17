@@ -24,10 +24,10 @@ const createFeedback = async (req, res) => {
 
     res
       .status(201)
-      .json({ message: ResponseConstants.Feedback.SuccessCreation, feedback });
+      .json({ message: ResponseConstants.Feedback.SuccessCreation });
   } catch (error) {
     res.status(500).json({
-      ...ResponseConstants.Feedback.Error.InternalServerError,
+      message: ResponseConstants.Feedback.Error.InternalServerError,
       error: error.message,
     });
   }
@@ -55,7 +55,7 @@ const updateFeedback = async (req, res) => {
     }
     res
       .status(200)
-      .json({ message: ResponseConstants.Feedback.SuccessUpdate, feedback });
+      .json({ message: ResponseConstants.Feedback.SuccessUpdate });
   } catch (error) {
     res.status(500).json({
       message: ResponseConstants.Feedback.Error.InternalServerError,

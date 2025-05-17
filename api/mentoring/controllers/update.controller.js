@@ -115,4 +115,5 @@ module.exports = {
   createProjectUpdate,
   updateProjectUpdate,
   deleteProjectUpdate,
+  createReview
 };
