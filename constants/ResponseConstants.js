@@ -24,6 +24,20 @@ const ResponseConstants = {
       InvalidEmail: "Invalid email format",
     },
   },
+  Review: {
+    SuccessCreated: "Review created successfully",
+    SuccessGet: "All Reviews fetched successfully",
+    SuccessGetById: "Review fetched successfully",
+    SuccessUpdate: "Review updated successfully",
+    SuccessDeletion: "Review deleted successfully",
+    Error: {
+      NotFound: "Review not found",
+      AllFieldsRequired: "All fields are required",
+      InternalServerError: "Internal Server Error",
+      InvalidDateTime:
+        "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+    },
+  },
   Event: {
     SuccessCreation: "Event created successfully",
     SuccessGet: "All Events fetched successfully",
@@ -111,7 +125,7 @@ const ResponseConstants = {
     },
   },
   Update: {
-    SuccessUpdate: "Update created successfully",
+    SuccessCreated: "Update created successfully",
     SuccessGet: "All Updates fetched successfully",
     SuccessGetById: "Update fetched successfully",
     SuccessUpdate: "Update updated successfully",
