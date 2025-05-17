@@ -44,12 +44,34 @@ const Feedback = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    is_deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     tableName: "feedback",
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    defaultScope: {
+      where: {
+        is_deleted: false,
+      },
+    },
+    scopes: {
+      withDeleted: {
+        where: {
+          is_deleted: false,
+        },
+      },
+      deleted: {
+        where: {
+          is_deleted: true,
+        },
+      },
+    },
     hooks: {
       beforeValidate: (feedback, options) => {
         if (feedback.mentor_id === null && feedback.student_id === null) {
