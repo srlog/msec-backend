@@ -25,7 +25,7 @@ const TeamMember = sequelize.define(
       },
       onDelete: "CASCADE",
     },
-    // Student's ID 
+    // Student's ID
     student_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -35,13 +35,35 @@ const TeamMember = sequelize.define(
       },
       onDelete: "CASCADE",
     },
+    is_deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     tableName: "team_members", // Table name in DB
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    defaultScope: {
+      where: {
+        is_deleted: false,
+      },
+    },
+    scopes: {
+      withDeleted: {
+        where: {
+          is_deleted: false,
+        },
+      },
+      deleted: {
+        where: {
+          is_deleted: true,
+        },
+      },
+    },
   }
 );
 
-module.exports = TeamMember ;
+module.exports = TeamMember;

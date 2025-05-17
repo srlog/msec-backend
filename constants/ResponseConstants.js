@@ -54,6 +54,62 @@ const ResponseConstants = {
       AlreadyRegistered: "User already registered for this event",
     },
   },
+  Project: {
+    SuccessCreation: "Project created successfully",
+    SuccessGet: "All Projects fetched successfully",
+    SuccessGetById: "Project fetched successfully",
+    SuccessUpdate: "Project updated successfully",
+    SuccessDeletion: "Project deleted successfully",
+    Error: {
+      NotFound: "Project not found",
+      AllFieldsRequired: "All fields are required",
+      InternalServerError: "Internal Server Error",
+      InvalidDateTime:
+        "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+    },
+  },
+  Report: {
+    SuccessCreation: "Report created successfully",
+    SuccessGet: "All Reports fetched successfully",
+    SuccessGetById: "Report fetched successfully",
+    SuccessUpdate: "Report updated successfully",
+    SuccessDeletion: "Report deleted successfully",
+    Error: {
+      NotFound: "Report not found",
+      AllFieldsRequired: "All fields are required",
+      InternalServerError: "Internal Server Error",
+      InvalidDateTime:
+        "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+    },
+  },
+  Feedback: {
+    SuccessCreation: "Feedback created successfully",
+    SuccessGet: "All Feedbacks fetched successfully",
+    SuccessGetById: "Feedback fetched successfully",
+    SuccessUpdate: "Feedback updated successfully",
+    SuccessDeletion: "Feedback deleted successfully",
+    Error: {
+      NotFound: "Feedback not found",
+      AllFieldsRequired: "All fields are required",
+      InternalServerError: "Internal Server Error",
+      InvalidDateTime:
+        "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+    },
+  },
+  Update: {
+    SuccessUpdate: "Update created successfully",
+    SuccessGet: "All Updates fetched successfully",
+    SuccessGetById: "Update fetched successfully",
+    SuccessUpdate: "Update updated successfully",
+    SuccessDeletion: "Update deleted successfully",
+    Error: {
+      NotFound: "Update not found",
+      AllFieldsRequired: "All fields are required",
+      InternalServerError: "Internal Server Error",
+      InvalidDateTime:
+        "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+    },
+  },
 };
 
 module.exports.ResponseConstants = ResponseConstants;

@@ -2,7 +2,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const Student = require("./Student");
-const Mentor= require("./Mentor");
+const Mentor = require("./Mentor");
 
 // Define the "Project" model
 const Project = sequelize.define(
@@ -29,7 +29,7 @@ const Project = sequelize.define(
       type: DataTypes.STRING(500),
       allowNull: true,
     },
-  
+
     created_by: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -37,8 +37,8 @@ const Project = sequelize.define(
         model: Student,
         key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'SET NULL',
+      onUpdate: "CASCADE",
+      onDelete: "SET NULL",
     },
     // Associated mentor's ID
     mentor_id: {
@@ -48,8 +48,13 @@ const Project = sequelize.define(
         model: Mentor,
         key: "mentor_id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'SET NULL',
+      onUpdate: "CASCADE",
+      onDelete: "SET NULL",
+    },
+    is_deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {
@@ -57,6 +62,23 @@ const Project = sequelize.define(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    defaultScope: {
+      where: {
+        is_deleted: false,
+      },
+    },
+    scopes: {
+      withDeleted: {
+        where: {
+          is_deleted: false,
+        },
+      },
+      deleted: {
+        where: {
+          is_deleted: true,
+        },
+      },
+    },
   }
 );
 

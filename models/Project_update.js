@@ -46,12 +46,34 @@ const ProjectUpdate = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    is_deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     tableName: "project_updates",
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    defaultScope: {
+      where: {
+        is_deleted: false,
+      },
+    },
+    scopes: {
+      withDeleted: {
+        where: {
+          is_deleted: false,
+        },
+      },
+      deleted: {
+        where: {
+          is_deleted: true,
+        },
+      },
+    },
   }
 );
 

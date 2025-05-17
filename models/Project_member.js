@@ -34,12 +34,34 @@ const ProjectMember = sequelize.define(
       },
       onDelete: "CASCADE",
     },
+    is_deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     tableName: "project_members", // Table name in DB
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    defaultScope: {
+      where: {
+        is_deleted: false,
+      },
+    },
+    scopes: {
+      withDeleted: {
+        where: {
+          is_deleted: false,
+        },
+      },
+      deleted: {
+        where: {
+          is_deleted: true,
+        },
+      },
+    },
   }
 );
 

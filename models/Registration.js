@@ -85,4 +85,6 @@ const Registration = sequelize.define(
         },
     }
 );
+
+
 module.exports = Registration;
