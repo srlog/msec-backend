@@ -1,4 +1,4 @@
-const { Event, Master } = require("../models"); // Adjust if needed
+const { Event, Master } = require("../../../models"); 
 const { ResponseConstants } = require("../../../constants/ResponseConstants");
 
 const createEvent = async (req, res) => {
