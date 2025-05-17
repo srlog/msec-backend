@@ -33,7 +33,6 @@ module.exports = {
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
       },
 
       mentor_id: {
@@ -44,7 +43,6 @@ module.exports = {
           key: 'mentor_id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
       },
 
       is_deleted: {

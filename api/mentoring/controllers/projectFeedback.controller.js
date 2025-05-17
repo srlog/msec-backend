@@ -1,4 +1,4 @@
-const { Feedback } = require("../models/index");
+const { Feedback } = require("../../../models/index");
 const { ResponseConstants } = require("../../../constants/ResponseConstants");
 
 const createFeedback = async (req, res) => {
