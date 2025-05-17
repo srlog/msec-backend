@@ -54,6 +54,20 @@ const ResponseConstants = {
       AlreadyRegistered: "User already registered for this event",
     },
   },
+  Team: {
+    SuccessCreation: "Team created successfully",
+    SuccessGet: "All Teams fetched successfully",
+    SuccessGetById: "Team fetched successfully",
+    SuccessUpdate: "Team updated successfully",
+    SuccessDeletion: "Team deleted successfully",
+    Error: {
+      NotFound: "Team not found",
+      AllFieldsRequired: "All fields are required",
+      InternalServerError: "Internal Server Error",
+      InvalidDateTime:
+        "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+    },  
+  },
   Project: {
     SuccessCreation: "Project created successfully",
     SuccessGet: "All Projects fetched successfully",
@@ -104,6 +118,20 @@ const ResponseConstants = {
     SuccessDeletion: "Update deleted successfully",
     Error: {
       NotFound: "Update not found",
+      AllFieldsRequired: "All fields are required",
+      InternalServerError: "Internal Server Error",
+      InvalidDateTime:
+        "Invalid date/time format. Use YYYY-MM-DD for date and HH:MM for time",
+    },
+  },
+  Member: {
+    SuccessCreation: "Member created successfully",
+    SuccessGet: "All Members fetched successfully",
+    SuccessGetById: "Member fetched successfully",
+    SuccessUpdate: "Member updated successfully",
+    SuccessDeletion: "Member deleted successfully",
+    Error: {
+      NotFound: "Member not found",
       AllFieldsRequired: "All fields are required",
       InternalServerError: "Internal Server Error",
       InvalidDateTime:

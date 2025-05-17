@@ -1,88 +1,55 @@
-const {Project,ProjectMember,Student}=require("../../../models");
-const {
-  HttpStatusCodeConstants,
-} = require("../../constants/HttpStatusCodeConstants");
-const { ResponseConstants } = require("../../constants/ResponseConstants")
-const addmember=async(req,res)=>{
-    try {
-        const {project_id}=req.params;
-        const {student_id}=req.body;
-        const project=await Project.findByPk(project_id);
-        if(!project){
-            return res.status(HttpStatusCodeConstants.NOT_FOUND).json({
-                message:ResponseConstants.Project.Error.NotFound
-            });
-        }
-        const student=await Student.findByPk(student_id);
-        if(!student){
-            return res.status(HttpStatusCodeConstants.NOT_FOUND).json({
-                message:ResponseConstants.User.Error.NotFound
-            });
-        }
-        await Project_member.create({project_id,student_id});
-        res.status(HttpStatusCodeConstants.CREATED).json({
-            message:ResponseConstants.Project.Success.MemberAdded
-        });
-    } catch (error) {
-        console.error("Error in adding member:", error);
-        res.status(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR).json({
-            message:ResponseConstants.Project.Error.InternalServerError,
-            error
-        });
-    }
-}
-const deletemember = async (req, res) => {
-    try {
-      const { project_id } = req.params;
-      const { student_id } = req.body;
-  
-      const project = await Project.findByPk(project_id);
-  
-      if (!project) {
-        return res.status(HttpStatusCodeConstants.NOT_FOUND).json({
-          message: ResponseConstants.Project.Error.NotFound,
-        });
-      }
-  
-      const student = await Student.findByPk(student_id);
-  
-      if (!student) {
-        return res.status(HttpStatusCodeConstants.NOT_FOUND).json({
-          message: ResponseConstants.User.Error.NotFound,
-        });
-      }
-  
-      await Project_member.update(
-        { is_deleted: true },
-        { where: { project_id, student_id } }
-      );
-  
-      res.status(HttpStatusCodeConstants.OK).json({
-        message: ResponseConstants.Project.Success.MemberDeleted,
-      });
-    } catch (error) {
-      console.error("Error in deleting member:", error);
-      res.status(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR).json({
-        message: ResponseConstants.Project.Error.InternalServerError,
-        error,
-      });
-    }
-  };
+const { Project, ProjectMember, Student } = require("../../../models");
+const { ResponseConstants } = require("../../../constants/ResponseConstants");
+const { HttpStatusCodeConstants } = require("../../../constants/HttpStatusCodeConstants");
 
-const updatemember=async(req,res)=>{
-   try{
-    const student_id=req.params.student_id;
-    const project_id=req.params.project_id;
-    await Project_member.update({where:{student_id,project_id}});
-    res.status(HttpStatusCodeConstants.OK).json({
-        message:ResponseConstants.Project.Success.MemberUpdated
+const addmember = async (req, res) => {
+  try {
+    const { project_id } = req.params;
+    const { student_id } = req.body;
+
+    const project = await Project.findByPk(project_id);
+    if (!project) {
+      return res.status(HttpStatusCodeConstants.NotFound).json({
+        message: ResponseConstants.Member.Error.NotFound,
+      });
+    }
+    const new_member = await ProjectMember.create({ project_id, student_id });
+    res.status(HttpStatusCodeConstants.Created).json({
+      message: ResponseConstants.Member.SuccessCreation,
     });
-   }catch(error){
-    console.error("Error in updating member:", error);
-    res.status(HttpStatusCodeConstants.INTERNAL_SERVER_ERROR).json({
-        message:ResponseConstants.Project.Error.InternalServerError,
-        error
+  } catch (error) {
+    console.error("Error in adding member:", error);
+    res.status(HttpStatusCodeConstants.InternalServerError).json({
+      message: ResponseConstants.Member.Error.InternalServerError,
+      error,
     });
-   }
-}
-module.exports={addmember,deletemember,updatemember};
+  }
+};
+const deletemember = async (req, res) => {
+  try {
+    const { project_member_id  } = req.params
+
+    const project_member = await ProjectMember.findByPk(project_member_id);
+    if (!project_member) {
+      return res.status(HttpStatusCodeConstants.NotFound).json({
+        message: ResponseConstants.Member.Error.NotFound,
+      });
+    }
+    await project_member.update({ is_deleted: true });
+
+
+    res.status(HttpStatusCodeConstants.Ok).json({
+      message: ResponseConstants.Member.SuccessDeletion,
+    });
+  } catch (error) {
+    console.error("Error in deleting member:", error);
+    res.status(HttpStatusCodeConstants.InternalServerError).json({
+      message: ResponseConstants.Member.Error.InternalServerError,
+      error,
+    });
+  }
+};
+
+
+module.exports = { addmember, deletemember };
+

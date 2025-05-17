@@ -64,6 +64,6 @@ const TeamMember = sequelize.define(
       },
     },
   }
-);
+);  
 
 module.exports = TeamMember;

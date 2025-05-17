@@ -63,7 +63,7 @@ const mentorLogin = async (req, res) => {
         id: mentor.id,
         email: mentor.email,
         name: mentor.name,
-        role: "Mentor",
+        role: "mentor",
       },
     });
   } catch (error) {

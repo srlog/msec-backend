@@ -1,9 +1,13 @@
-const { Project,Student,Mentor,Project_update,Report,} = require("../../../models/index");
+const {
+  Project_update,
+} = require("../../../models/index");
 
 const { ResponseConstants } = require("../../../constants/ResponseConstants");
+
 const createProjectUpdate = async (req, res) => {
   try {
-    const { project_id, title, description } = req.body;
+    const { project_id } = req.params;
+    const { title, description } = req.body;
     const student_id = req.user.id;
 
     const projectUpdate = await Project_update.create({
@@ -12,8 +16,11 @@ const createProjectUpdate = async (req, res) => {
       title,
       description,
     });
+    
 
-    res.status(201).json({ message: "Project update created successfully", projectUpdate });
+    res
+      .status(201)
+      .json({ message: ResponseConstants.Update.SuccessUpdate, projectUpdate });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating project update" });
@@ -49,7 +56,12 @@ const updateProjectUpdate = async (req, res) => {
       res.status(404).json({ message: "Project update not found" });
     } else {
       await projectUpdate.update({ title, description });
-      res.status(200).json({ message: "Project update updated successfully", projectUpdate });
+      res
+        .status(200)
+        .json({
+          message: "Project update updated successfully",
+          projectUpdate,
+        });
     }
   } catch (error) {
     console.error(error);
@@ -88,7 +100,9 @@ const reviewaddProjectUpdate = async (req, res) => {
       res.status(404).json({ message: "Project update not found" });
     } else {
       await projectUpdate.update({ review });
-      res.status(200).json({ message: "Review added successfully", projectUpdate });
+      res
+        .status(200)
+        .json({ message: "Review added successfully", projectUpdate });
     }
   } catch (error) {
     console.error(error);
@@ -108,7 +122,9 @@ const reviewupdateProjectUpdate = async (req, res) => {
       res.status(404).json({ message: "Project update not found" });
     } else {
       await projectUpdate.update({ review });
-      res.status(200).json({ message: "Review updated successfully", projectUpdate });
+      res
+        .status(200)
+        .json({ message: "Review updated successfully", projectUpdate });
     }
   } catch (error) {
     console.error(error);
@@ -142,4 +158,5 @@ module.exports = {
   deleteProjectUpdate,
   reviewaddProjectUpdate,
   reviewupdateProjectUpdate,
-  reviewdeleteProjectUpdate}
+  reviewdeleteProjectUpdate,
+};

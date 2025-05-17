@@ -75,7 +75,7 @@ const deleteProject = async (req, res) => {
     }
 
 }
-const 
+
 const getAllProjects = async (req, res) => {
   try {
     const projects = await Project.findAll({
@@ -265,8 +265,6 @@ const getRecentProjects = async (req, res) => {
     });
   }
 }
-
-const 
 
 module.exports = {
   createProject,

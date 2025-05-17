@@ -96,88 +96,6 @@ const updateRegistration = async (req, res) => {
 };
 
 
-const getRegistrationById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const registration = await Registration.findByPk(id, {
-      include: [
-        {
-          model: Student,
-          as: "teamLead",
-          attributes: ["id", "name", "email", "reg_no", "department"],
-        },
-        {
-          model: Mentor,
-          as: "mentor",
-          attributes: ["id", "name", "department"],
-        },
-        {
-          model: Student,
-          as: "teamMembers",
-          attributes: ["id", "name", "email"],
-        },
-      ],
-    });
-
-    if (!registration) {
-      return res.status(404).json({
-        message: ResponseConstants.Registration.Error.NotFound,
-      });
-    }
-
-    return res.status(200).json({
-      message: ResponseConstants.Registration.SuccessGetById,
-      registration,
-    });
-  } catch (error) {
-    console.error("Error fetching registration by ID:", error);
-    return res.status(500).json({
-      message: ResponseConstants.Registration.Error.InternalServerError,
-      error,
-    });
-  }
-};
-
-const getRegistrationByEventId = async (req, res) => {
-  try {
-    const { event_id } = req.params;
-
-    const registrations = await Registration.findAll({
-      where: {
-        event_id,
-      },
-      include: [
-        {
-          model: Student,
-          as: "teamLead",
-          attributes: ["id", "name", "reg_no","department"],
-        },
-        {
-          model: Mentor,
-          as: "mentor",
-          attributes: ["id", "name", "email"],
-        },
-        {
-          model: Student,
-          as: "teamMembers",
-          attributes: ["id", "name", "reg_no", "department"],
-        },
-      ],
-    });
-
-    return res.status(200).json({
-      message: ResponseConstants.Registration.SuccessGetById,
-      registrations,
-    });
-  } catch (error) {
-    console.error("Error fetching registrations by event ID:", error);
-    return res.status(500).json({
-      message: ResponseConstants.Registration.Error.InternalServerError,
-      error,
-    });
-  }
-}
 
 const getRegistrationsAdmin = async (req, res) => {
     const admin = await Admin.findByPk(req.user.id);
@@ -240,8 +158,6 @@ const deleteRegistration = async (req, res) => {
 module.exports = {
   registerEvent,
   updateRegistration,
-  getRegistrationById,
-  getRegistrationByEventId,
   getRegistrationsAdmin,
   deleteRegistration,
 };

@@ -1,4 +1,4 @@
-const { Event, Master } = require("../../../models"); 
+const { Event, Master, Registration, TeamMember } = require("../../../models"); 
 const { ResponseConstants } = require("../../../constants/ResponseConstants");
 
 const createEvent = async (req, res) => {
@@ -179,10 +179,90 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const getAllEventsMaster = async (req, res) => {
+  try {
+    const events = await Event.findAll(
+      {
+        include: [
+          {
+            model: Master,
+            as: "creator",
+            attributes: ["id", "name", "email"], // adjust fields
+          },
+          {
+            model: Registration,
+            as: "registrations",
+            include: [
+              {
+                model: Student,
+                as: "teamLead",
+                attributes: ["id", "name", "email", "reg_no", "department"],
+              },
+              {
+                model: Mentor,
+                as: "mentor",
+                attributes: ["id", "name", "department"],
+              }
+            ]
+          }
+        ],
+      }
+    );
+    return res.status(200).json({
+      message: ResponseConstants.Event.SuccessGet,
+      events,
+    });
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return res.status(500).json({
+      message: ResponseConstants.Event.Error.InternalServerError,
+      error,
+    });
+  }
+};
+const getRegistrations = async (req, res) => {
+
+  try{
+    const { id } = req.params;
+    
+    const registrations = await Registration.findAll({
+      include: [
+        {
+          model: Student,
+          as: "teamLead",
+          attributes: ["id", "name", "email", "reg_no", "department"],
+        },
+        {
+          model: Mentor,
+          as: "mentor",
+          attributes: ["id", "name", "department"],
+        }
+      ],
+      where: {
+        event_id: id
+      }
+    });
+
+    return res.status(200).json({
+      message: ResponseConstants.Registration.SuccessGet,
+      registrations,
+    });
+  } catch (error) {
+    console.error("Error fetching registrations:", error);
+    return res.status(500).json({
+      message: ResponseConstants.Registration.Error.InternalServerError,
+      error,
+    });
+  }
+
+}
+
 module.exports = {
   createEvent,
   getAllEvents,
   getEventById,
   updateEvent,
   deleteEvent,
+  getAllEventsMaster,
+  getRegistrations
 };
