@@ -8,7 +8,7 @@
     "start": "node app.js",
     "dev": "npx sequelize-cli db:migrate && nodemon app.js",
     "build": "npm install && npx sequelize-cli db:migrate",
-    "initdb":"node scripts\\init-db.js"
+    "initdb": "node scripts\\init-db.js"
   },
   "repository": {
     "type": "git",
@@ -26,11 +26,11 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.12.0",
-    "sequelize": "^6.37.5",
-    "sequelize-cli": "^6.6.2"
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "sequelize-cli": "^6.6.3"
   }
 }

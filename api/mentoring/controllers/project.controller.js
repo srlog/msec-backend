@@ -4,6 +4,7 @@ const {
   Mentor,
   Project_update,
   Report,
+  Feedback
 } = require("../../../models/index");
 
 const { ResponseConstants } = require("../../../constants/ResponseConstants");
@@ -79,29 +80,50 @@ const deleteProject = async (req, res) => {
 const getAllProjects = async (req, res) => {
   try {
     const projects = await Project.findAll({
+      where: {
+        is_deleted: 0
+      },
       include: [
         {
           model: Student,
-          as: "student",
+          as: "creator",
+          required: false  // include project even if no creator found
         },
         {
           model: Mentor,
           as: "mentor",
+          required: false  // include project even if no mentor found
+        },
+        {
+          model: Student,
+          as: "projectMembers",
+          through: { attributes: [] },
+          required: false  // include project even if no members found
         },
         {
           model: Project_update,
           as: "updates",
+          required: false
         },
         {
           model: Report,
           as: "reports",
+          required: false
         },
         {
           model: Feedback,
-          as: "feedback",
-        },
-      ],
+          as: "feedbacks",
+          required: false
+        }
+      ]
     });
+
+    if (!projects.length) {
+      console.log("No projects found with is_deleted = 0");
+    } else {
+      console.log(`Found ${projects.length} projects.`);
+    }
+
     return res.status(200).json({
       message: ResponseConstants.Project.SuccessGet,
       projects,
@@ -110,43 +132,58 @@ const getAllProjects = async (req, res) => {
     console.error("Error fetching projects:", error);
     return res.status(500).json({
       message: ResponseConstants.Project.Error.InternalServerError,
-      error,
+      error: error.message || error,
     });
   }
 };
 
+
 const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
+
     const project = await Project.findByPk(id, {
       include: [
         {
           model: Student,
-          as: "student",
+          as: "creator",        // correct alias for the student who created the project
+          required: false
         },
         {
           model: Mentor,
           as: "mentor",
+          required: false
+        },
+        {
+          model: Student,
+          as: "projectMembers",  // if you want to include project members
+          through: { attributes: [] },
+          required: false
         },
         {
           model: Project_update,
           as: "updates",
+          required: false
         },
         {
           model: Report,
           as: "reports",
+          required: false
         },
         {
           model: Feedback,
-          as: "feedback",
+          as: "feedbacks",       // plural alias based on previous info
+          required: false
         },
       ],
     });
+
     if (!project) {
       return res.status(404).json({
         message: ResponseConstants.Project.Error.NotFound,
       });
     }
+
     return res.status(200).json({
       message: ResponseConstants.Project.SuccessGetById,
       project,
@@ -155,10 +192,11 @@ const getProjectById = async (req, res) => {
     console.error("Error fetching project:", error);
     return res.status(500).json({
       message: ResponseConstants.Project.Error.InternalServerError,
-      error,
+      error: error.message || error,
     });
   }
 };
+
 
 const getProjectByStudentId = async (req, res) => {
   try {
@@ -168,26 +206,38 @@ const getProjectByStudentId = async (req, res) => {
       include: [
         {
           model: Student,
-          as: "student",
+          as: "creator",   // corrected alias for the student who created the project
+          required: false,
         },
         {
           model: Mentor,
           as: "mentor",
+          required: false,
+        },
+        {
+          model: Student,
+          as: "projectMembers",  // if you want to include members as well (optional)
+          through: { attributes: [] },
+          required: false,
         },
         {
           model: Project_update,
           as: "updates",
+          required: false,
         },
         {
           model: Report,
           as: "reports",
+          required: false,
         },
         {
           model: Feedback,
-          as: "feedback",
+          as: "feedbacks",   // plural alias for feedback association
+          required: false,
         },
       ],
     });
+
     if (!project) {
       return res.status(404).json({
         message: ResponseConstants.Project.Error.NotFound,
@@ -201,7 +251,7 @@ const getProjectByStudentId = async (req, res) => {
     console.error("Error fetching project:", error);
     return res.status(500).json({
       message: ResponseConstants.Project.Error.InternalServerError,
-      error,
+      error: error.message || error,
     });
   }
 };
@@ -214,26 +264,38 @@ const getProjectsByMentorId = async (req, res) => {
       include: [
         {
           model: Student,
-          as: "student",
+          as: "creator",      // corrected alias for student who created the project
+          required: false,
         },
         {
           model: Mentor,
           as: "mentor",
+          required: false,
+        },
+        {
+          model: Student,
+          as: "projectMembers",  // include project members if needed
+          through: { attributes: [] },
+          required: false,
         },
         {
           model: Project_update,
           as: "updates",
+          required: false,
         },
         {
           model: Report,
           as: "reports",
+          required: false,
         },
         {
           model: Feedback,
-          as: "feedback",
+          as: "feedbacks",     // plural alias for feedbacks association
+          required: false,
         },
       ],
     });
+
     return res.status(200).json({
       message: ResponseConstants.Project.SuccessGet,
       projects,
@@ -242,7 +304,7 @@ const getProjectsByMentorId = async (req, res) => {
     console.error("Error fetching projects:", error);
     return res.status(500).json({
       message: ResponseConstants.Project.Error.InternalServerError,
-      error,
+      error: error.message || error,
     });
   }
 };
