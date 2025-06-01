@@ -144,7 +144,9 @@ const ResponseConstants = {
     SuccessGetById: "Member fetched successfully",
     SuccessUpdate: "Member updated successfully",
     SuccessDeletion: "Member deleted successfully",
+    SuccessRetrieval: "Members fetched successfully",
     Error: {
+      AlreadyExists: "Member already exists",
       NotFound: "Member not found",
       AllFieldsRequired: "All fields are required",
       InternalServerError: "Internal Server Error",

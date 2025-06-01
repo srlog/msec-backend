@@ -128,9 +128,22 @@ const mentorUpdatePassword = async (req, res) => {
   }
 };
 
+const getAllMentors = async (req, res) => {
+  try {
+    const mentors = await Mentor.findAll();
+    return res.status(200).json(mentors);
+  } catch (error) {
+    console.error("Error in getting mentors:", error);
+    return res
+      .status(500)
+      .json({ message: ResponseConstants.User.Error.InternalServerError, error });
+  }
+};
+
 /* ----------------------------------------------------------------------- */
 module.exports = {
   mentorRegister,
   mentorLogin,
   mentorUpdatePassword,
+  getAllMentors,
 };

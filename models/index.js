@@ -242,6 +242,19 @@ Log.belongsTo(Achievement, {
   as: "achievement",
 });
 
+// Student and ProjectMember
+
+Student.hasMany(ProjectMember, {
+  foreignKey: "student_id",
+  as: "studentProjectMembers",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+ProjectMember.belongsTo(Student, {
+  foreignKey: "student_id",
+  as: "student",
+});
+
 module.exports = {
   // Portfolio Models
   Student,
