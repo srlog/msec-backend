@@ -215,7 +215,7 @@ const getProjectById = async (req, res) => {
 const getProjectByStudentId = async (req, res) => {
   try {
     const { created_by } = req.params;
-    const project = await Project.findOne({
+    const project = await Project.findAll({
       where: { created_by },
       include: [
         {
@@ -258,6 +258,61 @@ const getProjectByStudentId = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching project:", error);
+    return res.status(500).json({
+      message: ResponseConstants.Project.Error.InternalServerError,
+      error: error.message || error,
+    });
+  }
+};
+
+
+const getMentorProjects = async (req, res) => {
+  try {
+    console.log(req.user)
+    const mentor_id  = req.user.id;
+    const projects = await Project.findAll({
+      where: { mentor_id },
+      include: [
+        {
+          model: Student,
+          as: "creator", // corrected alias for student who created the project
+          required: false,
+        },
+        {
+          model: Mentor,
+          as: "mentor",
+          required: false,
+        },
+        {
+          model: Student,
+          as: "projectMembers", // include project members if needed
+          through: { attributes: [] },
+          required: false,
+        },
+        {
+          model: Project_update,
+          as: "updates",
+          required: false,
+        },
+        {
+          model: Report,
+          as: "reports",
+          required: false,
+        },
+        {
+          model: Feedback,
+          as: "feedbacks", // plural alias for feedbacks association
+          required: false,
+        },
+      ],
+    });
+
+    return res.status(200).json({
+      message: ResponseConstants.Project.SuccessGet,
+      projects,
+    });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
     return res.status(500).json({
       message: ResponseConstants.Project.Error.InternalServerError,
       error: error.message || error,
@@ -352,5 +407,6 @@ module.exports = {
   getProjectById,
   getProjectByStudentId,
   getProjectsByMentorId,
+  getMentorProjects,
   getRecentProjects,
 };

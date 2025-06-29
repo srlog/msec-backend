@@ -72,7 +72,7 @@ const mentorLogin = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: mentor.id, name: mentor.name, email: mentor.email, role: "Mentor" },
+      { id: mentor.mentor_id, name: mentor.name, email: mentor.email, role: "Mentor" },
       process.env.JWT_SECRET,
       { expiresIn: "10d" }
     );
@@ -81,7 +81,7 @@ const mentorLogin = async (req, res) => {
       message: ResponseConstants.User.SuccessLogin.Mentor,
       token,
       user: {
-        id: mentor.id,
+        id: mentor.mentor_id,
         name: mentor.name,
         email: mentor.email,
         role: "mentor",

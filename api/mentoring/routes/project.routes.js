@@ -15,7 +15,8 @@ router.put("/:id", auth, projectController.updateProject);
 router.delete("/:id", auth, projectController.deleteProject);
 router.get("/", auth, projectController.getAllProjects);
 router.get("/:id", auth, projectController.getProjectById);
-
+router.get("/mentor/my", auth, projectController.getMentorProjects);
 router.get("/mentor/:mentor_id", auth, projectController.getProjectsByMentorId);
+
 
 module.exports = router;
