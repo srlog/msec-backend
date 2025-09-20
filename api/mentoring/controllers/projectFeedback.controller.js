@@ -8,7 +8,7 @@ const createFeedback = async (req, res) => {
 
     if (req.user.role === "student") {
       const student_id = req.user.id;
-      const feedback = await Feedback.create({
+      const feedback = await Feedback.create({ 
         student_id,
         project_id,
         content,
